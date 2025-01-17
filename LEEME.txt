@@ -1,0 +1,100 @@
+
+
+Librerías Importadas
+mysql.connector: Esta librería permite la conexión a una base de datos MySQL desde Python. Se utiliza para ejecutar consultas y recuperar resultados.
+os: Esta librería proporciona funciones para interactuar con el sistema operativo, como manipulación de archivos y rutas.
+ftplib.FTP: Esta clase de la librería ftplib permite la conexión a un servidor FTP y la transferencia de archivos.
+Función copiar_archivos_desde_ftp
+python
+Copiar código
+def copiar_archivos_desde_ftp(archivos, carpeta_ftp, carpeta_local):
+    ftp = FTP('192.168.50.37')
+    ftp.login(user='rpaback1', passwd='Cyber123')
+    
+    ftp.cwd(carpeta_ftp)
+    
+    for archivo in archivos:
+        with open(os.path.join(carpeta_local, archivo), 'wb') as f:
+            ftp.retrbinary('RETR ' + archivo, f.write)
+    
+    ftp.quit()
+Descripción de la Función
+Parámetros:
+archivos: Lista de nombres de archivos que se quieren descargar.
+carpeta_ftp: Carpeta del servidor FTP desde la cual se descargan los archivos.
+carpeta_local: Carpeta local donde se guardarán los archivos descargados.
+Pasos:
+Conexión al servidor FTP: Se realiza una conexión a un servidor FTP en la dirección 192.168.50.37 con el usuario y contraseña proporcionados.
+Cambio de directorio FTP: Se cambia al directorio FTP especificado por carpeta_ftp.
+Descarga de archivos: Para cada archivo en la lista archivos, se abre un archivo local en modo binario (wb) en la ruta especificada por carpeta_local y se descarga el archivo desde el servidor FTP utilizando el comando retrbinary.
+Cierre de la conexión: Al final, se cierra la conexión al servidor FTP con ftp.quit().
+Conexión a la Base de Datos MySQL
+python
+Copiar código
+conexion = mysql.connector.connect(
+    host="192.168.51.210",
+    user="root",
+    password="",
+    database="audios_dana"
+)
+Se realiza una conexión a una base de datos MySQL con la dirección 192.168.51.210. El usuario es root, sin contraseña y la base de datos utilizada es audios_dana.
+Creación del Cursor
+python
+Copiar código
+cursor = conexion.cursor()
+Un cursor es un objeto que permite ejecutar consultas en la base de datos y recuperar resultados.
+Consulta a la Base de Datos
+python
+Copiar código
+consulta = ("SELECT audio_name FROM audios WHERE owner = 'izzi' AND tipo = 'servicios' "
+            "AND tarea_programada = 1 AND analizado_tareas = 0 LIMIT 30")
+Se define una consulta SQL que selecciona los nombres de audios que pertenecen al propietario 'izzi', tienen el tipo 'servicios', tienen la tarea programada (tarea_programada = 1), y no han sido analizados (analizado_tareas = 0). La consulta está limitada a los primeros 30 resultados.
+Ejecución de la Consulta y Manejo de Resultados
+python
+Copiar código
+cursor.execute(consulta)
+nombres_audios = cursor.fetchall()
+Se ejecuta la consulta SQL mediante el método cursor.execute().
+Los resultados de la consulta se almacenan en la variable nombres_audios utilizando el método fetchall(), que devuelve una lista de tuplas. Cada tupla contiene el nombre de un audio.
+Escritura de los Resultados en un Archivo de Texto
+python
+Copiar código
+ruta_archivo = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\nombre_audios\audios.txt"
+
+with open(ruta_archivo, 'w') as archivo:
+    for nombre_audio in nombres_audios:
+        archivo.write(nombre_audio[0] + '\n')
+
+print("Se han guardado los nombres de los primeros 30 audios en el archivo audios.txt")
+Se abre un archivo de texto en la ruta especificada para escribir los nombres de los audios recuperados.
+Se itera sobre los nombres de los audios (nombres_audios) y cada nombre se escribe en una nueva línea del archivo.
+Finalmente, se imprime un mensaje indicando que se ha guardado la información correctamente.
+Copia de Archivos desde el Servidor FTP
+python
+Copiar código
+carpeta_ftp = "Audios"
+carpeta_local = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\audios_extraidos"
+
+copiar_archivos_desde_ftp([nombre_audio[0] for nombre_audio in nombres_audios], carpeta_ftp, carpeta_local)
+print("Se han copiado los archivos de audio desde el servidor FTP.")
+Directorio FTP y local: Se definen las rutas del servidor FTP (carpeta_ftp) y la carpeta local (carpeta_local) donde se guardarán los archivos.
+Llamada a la función: Se llama a la función copiar_archivos_desde_ftp() con los nombres de los archivos que se obtuvieron en la consulta, y las rutas correspondientes.
+Después de copiar los archivos, se imprime un mensaje indicando que la operación ha sido exitosa.
+Manejo de Errores
+python
+Copiar código
+except mysql.connector.Error as error:
+    print("Error al ejecutar la consulta:", error)
+Si ocurre un error al ejecutar la consulta SQL, el error es capturado y se imprime un mensaje indicando el tipo de error.
+Cierre de la Conexión y el Cursor
+python
+Copiar código
+finally:
+    cursor.close()
+    conexion.close()
+En la sección finally, se asegura que tanto el cursor como la conexión a la base de datos se cierren correctamente, independientemente de si ocurre un error o no.
+Resumen de Flujo del Código
+Se conecta a la base de datos MySQL y ejecuta una consulta para obtener una lista de los primeros 30 audios que cumplen ciertos criterios.
+Se guarda esta lista de nombres de audios en un archivo de texto local.
+Luego, se conectan a un servidor FTP y descargan los archivos de audio cuyos nombres fueron obtenidos de la base de datos, guardándolos en una carpeta local.
+Todo el proceso es gestionado con manejo de errores para asegurar que cualquier problema en la base de datos se capture y cierre correctamente la conexión.
