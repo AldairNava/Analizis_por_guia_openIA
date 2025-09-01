@@ -59,7 +59,7 @@ Los resultados de la consulta se almacenan en la variable nombres_audios utiliza
 Escritura de los Resultados en un Archivo de Texto
 python
 Copiar código
-ruta_archivo = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\nombre_audios\audios.txt"
+ruta_archivo = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\nombre_audios\audios.txt"
 
 with open(ruta_archivo, 'w') as archivo:
     for nombre_audio in nombres_audios:
@@ -73,7 +73,7 @@ Copia de Archivos desde el Servidor FTP
 python
 Copiar código
 carpeta_ftp = "Audios"
-carpeta_local = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\audios_extraidos"
+carpeta_local = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\audios_extraidos"
 
 copiar_archivos_desde_ftp([nombre_audio[0] for nombre_audio in nombres_audios], carpeta_ftp, carpeta_local)
 print("Se han copiado los archivos de audio desde el servidor FTP.")

@@ -13,7 +13,7 @@ def transcripciones():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
+    folder_path = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
     query = """
     SELECT id_audio, filename 
@@ -65,7 +65,7 @@ def chat():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat'
+    folder_path = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\chat'
 
     query = """
     SELECT id_audio, filename 
@@ -118,7 +118,7 @@ def transcripcion_original():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
+    folder_path = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
     query = """
     SELECT id_audio, filename 
@@ -171,7 +171,7 @@ def justificacion_emociones():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones'
+    folder_path = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones'
 
     query = """
     SELECT id_audio, filename 
@@ -224,7 +224,7 @@ def resumen():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones'
+    folder_path = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones'
 
     query = """
     SELECT id_audio, filename 

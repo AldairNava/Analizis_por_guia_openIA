@@ -123,7 +123,7 @@ def main(guia, tipo):
 
     cursor = db_connection.cursor()
 
-    folder_path = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad"
+    folder_path = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad"
 
     data_to_insert = []
 

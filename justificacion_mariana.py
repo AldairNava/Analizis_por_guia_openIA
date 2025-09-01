@@ -128,7 +128,7 @@ def main(guia, tipo):
     cursor = db_connection.cursor()
 
     # Ruta de la carpeta local donde se encuentran los archivos .txt
-    folder_path = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad"
+    folder_path = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad"
 
     # Lista para almacenar los datos a insertar en la base de datos
     data_to_insert = []

@@ -33,7 +33,7 @@ def status_completado():
     nombres_archivo_existente = {registro[0]: registro[1] for registro in registros_audios}
     # print("Nombres de archivo existentes:", nombres_archivo_existente)
 
-    carpeta_transcripcion = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov4'
+    carpeta_transcripcion = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov4'
     print(f"Carpeta de transcripción: {carpeta_transcripcion}")
 
     for archivo in os.listdir(carpeta_transcripcion):

@@ -519,7 +519,7 @@ Alternativamente, se puede modificar el script para uso manual descomentando y a
 ## Notas Adicionales
 
 - El script utiliza una conexión a una base de datos MySQL local (host: '192.168.51.210').
-- Los archivos de transcripción deben estar en la carpeta 'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'.
+- Los archivos de transcripción deben estar en la carpeta 'C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'.
 - El script maneja diferentes lógicas de cálculo para distintos tipos de guías (servicios/retenciones vs. soporte).
 
 
@@ -648,8 +648,8 @@ Esta función abre un archivo de texto y devuelve su contenido en forma de caden
 2.3. Configuración de carpetas y archivos
 python
 Copiar código
-folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
-results_folder = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\emociones'
+folder_path = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
+results_folder = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\emociones'
 os.makedirs(results_folder, exist_ok=True)
 text_paths = glob.glob(folder_path + '/*.txt')
 Se definen las rutas de carpetas para los archivos de entrada y de salida. Los archivos de texto que serán procesados se buscan en la carpeta de transcripciones usando glob. Los resultados se guardan en una carpeta de emociones, la cual se crea si no existe.
@@ -765,11 +765,11 @@ re: Se emplea para trabajar con expresiones regulares, que se usan para extraer 
 2. Definición de rutas
 python
 Copiar código
-ruta_principal = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
-ruta_resumen = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\resumen"
-ruta_reincidencias = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\reincidencia"
-ruta_insatisfacciones = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\insatisfaccion"
-ruta_emociones = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones"
+ruta_principal = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
+ruta_resumen = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\resumen"
+ruta_reincidencias = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\reincidencia"
+ruta_insatisfacciones = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\insatisfaccion"
+ruta_emociones = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones"
 Estas son las rutas donde se almacenan los archivos de texto que se procesarán, así como las carpetas donde se guardarán los resultados:
 
 ruta_principal: Carpeta donde están los archivos originales de texto.
@@ -929,7 +929,7 @@ El script contiene varias funciones, cada una encargada de actualizar una column
 
 **Proceso**:
 - Similar a `transcripciones()`, pero trabaja con la columna `chat` y la carpeta `chat`.
-- Lee archivos de texto desde `C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat`.
+- Lee archivos de texto desde `C:\Analisis_Masivo_guia\Proceso_Clidad_1\chat`.
 
 ### 3. `transcripcion_original()`
 
@@ -937,7 +937,7 @@ El script contiene varias funciones, cada una encargada de actualizar una column
 
 **Proceso**:
 - Similar a `transcripciones()`, pero trabaja con la columna `transcripcion_original`.
-- Lee archivos de texto desde `C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones`.
+- Lee archivos de texto desde `C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones`.
 
 ### 4. `justificacion_emociones()`
 
@@ -945,7 +945,7 @@ El script contiene varias funciones, cada una encargada de actualizar una column
 
 **Proceso**:
 - Similar a las funciones anteriores, pero trabaja con la columna `justificacion_emociones`.
-- Lee archivos de texto desde `C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones`.
+- Lee archivos de texto desde `C:\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones`.
 - **Nota**: Utiliza codificación `latin-1` al leer los archivos.
 
 ### 5. `resumen()`
@@ -954,7 +954,7 @@ El script contiene varias funciones, cada una encargada de actualizar una column
 
 **Proceso**:
 - Similar a las funciones anteriores, pero trabaja con la columna `resumen` en una tabla diferente (`contextos_calidad`).
-- Lee archivos de texto desde `C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones`.
+- Lee archivos de texto desde `C:\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones`.
 - **Nota**: Utiliza codificación `latin-1` al leer los archivos.
 
 ## Uso del Script
@@ -1095,7 +1095,7 @@ El resultado se guarda en la variable `registros_audios`, que es una lista de tu
 El código procede a leer los archivos de transcripción almacenados en la carpeta especificada:
 
 ```python
-carpeta_transcripcion = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
+carpeta_transcripcion = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 ```
 
 Para cada archivo en la carpeta de transcripciones, se extrae el nombre sin la extensión y se le agrega la extensión `.mp3` para compararlo con los nombres de audio almacenados en la base de datos.
@@ -1147,7 +1147,7 @@ El código utiliza `mysql.connector` para conectarse a la base de datos MySQL y 
 
 ### Lectura de Archivos en la Carpeta
 
-El módulo `os` se utiliza para listar todos los archivos dentro de la carpeta `C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones`. La función `os.listdir()` devuelve una lista de archivos en la carpeta, y `os.path.splitext()` se utiliza para obtener el nombre del archivo sin la extensión.
+El módulo `os` se utiliza para listar todos los archivos dentro de la carpeta `C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones`. La función `os.listdir()` devuelve una lista de archivos en la carpeta, y `os.path.splitext()` se utiliza para obtener el nombre del archivo sin la extensión.
 
 ### Condicional de Estado
 
@@ -1212,9 +1212,9 @@ Esta función es una lista de rutas a las carpetas que se desean vaciar. Llama a
 
 Las carpetas incluyen:
 
-- **C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\audios**
-- **C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat**
-- **C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones**
+- **C:\Analisis_Masivo_guia\Proceso_Clidad_1\audios**
+- **C:\Analisis_Masivo_guia\Proceso_Clidad_1\chat**
+- **C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones**
 
 ...y varias otras relacionadas con procesos de transcripción, chat, emociones, y más.
 
@@ -1255,9 +1255,9 @@ Donde `nombre_del_script.py` es el nombre del archivo en el que has guardado el 
 ```
 --------- INICIANDO ELIMINACION DE ARCHIVOS ALMACENADOS ---------
 
-Se ha eliminado el archivo: C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\audios\archivo1.txt
-Se ha eliminado el archivo: C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\audios\archivo2.txt
-No se pudo eliminar C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\audios_extraidos\archivo3.txt: [Error de Permiso]
+Se ha eliminado el archivo: C:\Analisis_Masivo_guia\Proceso_Clidad_1\audios\archivo1.txt
+Se ha eliminado el archivo: C:\Analisis_Masivo_guia\Proceso_Clidad_1\audios\archivo2.txt
+No se pudo eliminar C:\Analisis_Masivo_guia\Proceso_Clidad_1\audios_extraidos\archivo3.txt: [Error de Permiso]
 
 --------- FINALIZA ELIMINACION CON EXITO ---------
 ```

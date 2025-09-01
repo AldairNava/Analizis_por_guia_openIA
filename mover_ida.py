@@ -3,8 +3,8 @@ import shutil
 import random
 
 # Directorio de origen y destino
-directorio_origen = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\audios_extraidos'
-directorio_destino = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\audios'
+directorio_origen = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\audios_extraidos'
+directorio_destino = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\audios'
 
 # Lista de archivos de audio en el directorio de origen
 archivos_audio = [archivo for archivo in os.listdir(directorio_origen) if archivo.endswith('.mp3') or archivo.endswith('.wav')]

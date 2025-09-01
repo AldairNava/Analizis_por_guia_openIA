@@ -81,7 +81,7 @@ def copiar_archivos_desde_ftp(archivos, carpeta_ftp, carpeta_local):
         print(f"Se han registrado {cantidad_no_encontrados} audios no encontrados.")
         fecha_hoy = datetime.now().strftime("%Y%m%d")
         ruta_no_encontrados = os.path.join(
-            r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\registro no encontrados',
+            r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\registro no encontrados',
             f'audios_no_descargados_{fecha_hoy}.txt'
         )
         with open(ruta_no_encontrados, 'a') as f:
@@ -165,7 +165,7 @@ try:
 
     nombres_audios_txt = [nombre_audio[0].replace('.mp3', '.txt') for nombre_audio in nombres_audios]
 
-    carpeta_local_transcripciones = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones"
+    carpeta_local_transcripciones = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones"
     limpiar_carpeta_local(carpeta_local_transcripciones)
 
     carpeta_ftp_transcripciones = "Transcripciones/Transcripciones/"
@@ -173,7 +173,7 @@ try:
 
     print(f"Se Guardaron los {num_transcripciones} transcripciones del ftp")
 
-    carpeta_local_chat = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat"
+    carpeta_local_chat = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\chat"
     limpiar_carpeta_local(carpeta_local_chat)
 
     carpeta_ftp_chat = "Transcripciones/Chat/"

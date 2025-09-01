@@ -8,7 +8,7 @@ import os
 #cliente insatisfecho
 
 def cliente_insatisfecho_cargar():
-    carpeta_calificaciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\insatisfaccion'
+    carpeta_calificaciones = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\insatisfaccion'
     archivos_calificaciones = [f for f in os.listdir(carpeta_calificaciones) if f.endswith('.txt')]
 
     conexion = mysql.connector.connect(
@@ -55,12 +55,12 @@ import os
 import mysql.connector
 
 def cargar_motivo_problematica_sentimientos_solucion(guia, tipo):
-    ruta_solucion = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\solucion"
-    ruta_motivo = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\motivo_llamada"
-    ruta_sentimientos = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\sentimientos"
-    ruta_problematica = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\problematica"
-    ruta_datos_actualizacion = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\datos_actualizcion"
-    ruta_titularidad = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\titularidad"
+    ruta_solucion = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\solucion"
+    ruta_motivo = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\motivo_llamada"
+    ruta_sentimientos = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\sentimientos"
+    ruta_problematica = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\problematica"
+    ruta_datos_actualizacion = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\datos_actualizcion"
+    ruta_titularidad = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\titularidad"
 
     archivos_motivo = [f for f in os.listdir(ruta_motivo) if f.endswith('.txt')]
 
@@ -152,7 +152,7 @@ def cargar_motivo_problematica_sentimientos_solucion(guia, tipo):
 #cliente reincidencia
 
 def reincidencia_cargar():
-    carpeta_calificaciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\reincidencia'
+    carpeta_calificaciones = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\reincidencia'
     archivos_calificaciones = [f for f in os.listdir(carpeta_calificaciones) if f.endswith('.txt')]
 
     conexion = mysql.connector.connect(
@@ -235,7 +235,7 @@ def carga_de_base(guia,tipo):
 
     if __name__ == "__main__":
     
-        carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
+        carpeta_transcripciones = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
         archivos_emociones = [f for f in os.listdir(carpeta_transcripciones) if f.endswith('.txt')]
 
@@ -289,7 +289,7 @@ def carga_de_base(guia,tipo):
 
     if __name__ == "__main__":
 
-        carpeta_emociones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\emociones'
+        carpeta_emociones = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\emociones'
 
         archivos_emociones = [f for f in os.listdir(carpeta_emociones) if f.endswith('.txt')]
 
@@ -341,7 +341,7 @@ def carga_de_base(guia,tipo):
 
     if __name__ == "__main__":
         
-        carpeta_chat = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat'
+        carpeta_chat = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\chat'
 
         archivos_chat = [f for f in os.listdir(carpeta_chat) if f.endswith('.txt')]
 
@@ -394,7 +394,7 @@ def carga_de_base(guia,tipo):
 
     if __name__ == "__main__":
     
-        carpeta_tra = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
+        carpeta_tra = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
         archivos_tra = [f for f in os.listdir(carpeta_tra) if f.endswith('.txt')]
 
@@ -420,7 +420,7 @@ def carga_de_base(guia,tipo):
 
         cursor = conexion.cursor()
 
-        carpeta_local = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\emociones"
+        carpeta_local = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\emociones"
 
         try:
             
@@ -501,7 +501,7 @@ def carga_de_base(guia,tipo):
 
     if __name__ == "__main__":
     
-        carpeta_jus = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones'
+        carpeta_jus = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones'
 
         archivos_jus = [f for f in os.listdir(carpeta_jus) if f.endswith('.txt')]
 
@@ -534,7 +534,7 @@ def carga_de_base(guia,tipo):
 
         cursor = conexion.cursor()
 
-        ruta_resumen = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad'
+        ruta_resumen = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad'
 
         archivos_resumen = os.listdir(ruta_resumen)
 
@@ -611,7 +611,7 @@ def carga_de_base(guia,tipo):
 
     if __name__ == "__main__":
     
-        carpeta_resumen = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\resumen'
+        carpeta_resumen = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\resumen'
 
         archivos_resumen = [f for f in os.listdir(carpeta_resumen) if f.endswith('.txt')]
 
@@ -663,7 +663,7 @@ def carga_de_base(guia,tipo):
 
     if __name__ == "__main__":
 
-        carpeta_pov = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1'
+        carpeta_pov = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1'
         archivos_pov = [f for f in os.listdir(carpeta_pov) if f.endswith('.txt')]
 
         for archivo in archivos_pov:
@@ -725,7 +725,7 @@ def carga_de_base(guia,tipo):
 
     # if __name__ == "__main__":
     
-    #     carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\speech_analytics'
+    #     carpeta_transcripciones = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\speech_analytics'
 
     #     archivos_emociones = [f for f in os.listdir(carpeta_transcripciones) if f.endswith('.txt')]
 

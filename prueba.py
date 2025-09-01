@@ -1,7 +1,7 @@
 import os
 
 # Nombre de la carpeta donde se guardarán los archivos
-carpeta_salida = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
+carpeta_salida = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
 # Crear la carpeta si no existe
 if not os.path.exists(carpeta_salida):

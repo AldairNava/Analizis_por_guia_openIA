@@ -108,7 +108,7 @@ def flujo_Principal():
         print("\nINICIANDO RESULTADO ASISTENTE\n")
         subprocess.run(["python", "asistente.py", guia])
         
-        ruta_principal = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
+        ruta_principal = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
         
         for archivo in os.listdir(ruta_principal):
             if archivo.endswith(".txt"):

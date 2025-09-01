@@ -566,7 +566,7 @@ def extraccion(guia):
     print("\nINICIANDO EXTRACCION DE CALIFICACIONES\n")
     start_time = time.time()
 
-    carpeta_data = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion'
+    carpeta_data = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion'
 
     conexion = mysql.connector.connect(
         host="192.168.51.210",
@@ -636,9 +636,9 @@ def extraccion_1():
     
     print("\nINICIANDO EXTRACCION DE PRIMER JSON\n")
 
-    carpeta_entrada = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1'
+    carpeta_entrada = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1'
 
-    carpeta_salida = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
+    carpeta_salida = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
 
     for nombre_archivo in os.listdir(carpeta_entrada):
 
@@ -677,8 +677,8 @@ def extraccion_2():
     
     print("\nINICIANDO EXTRACCION DE SEGUNDO JSON\n")
 
-    carpeta_entrada = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov3'
-    carpeta_salida = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_2'
+    carpeta_entrada = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov3'
+    carpeta_salida = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_2'
 
     for nombre_archivo in os.listdir(carpeta_entrada):
 
@@ -715,7 +715,7 @@ def extraccion_2():
 #*********************** ELIMINA COMILLAS DOBLES
                 
 def eliminar_comillas_numeros_en_carpeta():
-    ruta_carpeta = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
+    ruta_carpeta = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
     for nombre_archivo in os.listdir(ruta_carpeta):
         ruta_json = os.path.join(ruta_carpeta, nombre_archivo)
 
@@ -738,9 +738,9 @@ def eliminar_comillas_numeros_en_carpeta():
 def comparacion():
     print("\nINICIANDO COMPARACION DE JSON pov4\n")
 
-    folder_path_json1 = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
-    folder_path_json2 = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_2'
-    output_folder = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov4'
+    folder_path_json1 = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
+    folder_path_json2 = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_2'
+    output_folder = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov4'
 
     for filename in os.listdir(folder_path_json1):
         file_path_json1 = os.path.join(folder_path_json1, filename)
@@ -789,9 +789,9 @@ def comparacion():
 #*********************** ELIMINA FORMATO JSON Y DEJA SOLO TABLA DE CALIFICACIONES
 
 def eliminar_json():
-    archivo_a_analizar = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
+    archivo_a_analizar = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
 
-    carpeta_salida = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad"
+    carpeta_salida = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad"
     
     for nombre_archivo in os.listdir(archivo_a_analizar):
         ruta_entrada = os.path.join(archivo_a_analizar, nombre_archivo)
@@ -845,7 +845,7 @@ def cargar_calificaciones_en_mysql(guia):
 
     cursor = conn.cursor()
 
-    json_folder = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov4'
+    json_folder = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov4'
 
     for filename in os.listdir(json_folder):
         file_path = os.path.join(json_folder, filename)
@@ -933,8 +933,8 @@ def main():
     start_time = time.time()
     if len(sys.argv) > 1:
         guia = sys.argv[1]
-        carpeta_archivos = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
-        carpeta_data = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion'
+        carpeta_archivos = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
+        carpeta_data = r'C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion'
         guia_set(guia, carpeta_archivos, carpeta_data)
     else:
         print("Por favor, proporciona el nombre del archivo como argumento de línea de comandos.")

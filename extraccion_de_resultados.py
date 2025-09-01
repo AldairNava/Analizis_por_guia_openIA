@@ -1,17 +1,17 @@
 import os
 import re
 
-ruta_principal = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
-ruta_resumen = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\resumen"
-ruta_reincidencias = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\reincidencia"
-ruta_insatisfacciones = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\insatisfaccion"
-ruta_emociones = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones"
-ruta_solucion = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\solucion"
-ruta_motivo = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\motivo_llamada"
-ruta_sentimientos = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\sentimientos"
-ruta_problematica = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\problematica"
-ruta_titular = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\titularidad"
-ruta_datos_actualizacion = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\datos_actualizcion"
+ruta_principal = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
+ruta_resumen = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\resumen"
+ruta_reincidencias = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\reincidencia"
+ruta_insatisfacciones = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\insatisfaccion"
+ruta_emociones = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones"
+ruta_solucion = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\solucion"
+ruta_motivo = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\motivo_llamada"
+ruta_sentimientos = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\sentimientos"
+ruta_problematica = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\problematica"
+ruta_titular = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\titularidad"
+ruta_datos_actualizacion = r"C:\Analisis_Masivo_guia\Proceso_Clidad_1\datos_actualizcion"
 
 os.makedirs(ruta_resumen, exist_ok=True)
 os.makedirs(ruta_reincidencias, exist_ok=True)
