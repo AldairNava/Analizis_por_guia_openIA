@@ -1,18 +1,34 @@
 import subprocess
-import datetime
-import schedule
 import requests
+import mysql.connector
 import time
 import re
+import datetime
 import os
 from Tele import send_msg
+
+def consultar_Transcritos():
+    """Consulta la base de datos para verificar registros con status 'Transcrito'."""
+    conexion = mysql.connector.connect(
+        host="192.168.51.210",
+        user="root",
+        password="thor",
+        database="audios_dana"
+    )
+    cursor = conexion.cursor()
+    consulta = "SELECT count(*) FROM audios WHERE status in ('Transcrito')"
+    cursor.execute(consulta)
+    resultado = cursor.fetchone()[0]
+    conexion.close()
+    
+    return resultado
 
 def ejecutar_script(script):
     resultado = subprocess.run(["python", script], capture_output=True, text=True)
     return resultado.returncode
 
 def flujo_Principal():
-    # send_msg("Analizis Masivo Iniciado")
+    send_msg("Analizis Masivo Iniciado")
     print("\nLimpiando las carpetas para Iniciar la carga\n")
     subprocess.run(["python", "eliminar_datos.py"])
     
@@ -72,25 +88,27 @@ def flujo_Principal():
                             print(tipo)
                         else:
                             print("sin info Tabla de audios para Analizar Vacia")
-                            # send_msg("Analisis masivo finalizado")
+                            send_msg("Analisis masivo finalizado")
                             try:
                                 print("Realizando tabla para reprote")
-                                # send_msg("Realizando tabla para reprote")
-                                response = requests.get("http://192.168.51.210/api/DashboardController/insertaIndicadorMesCompleto")
+                                send_msg("Realizando tabla para reprote")
+                                subprocess.run(["python", "evitar_duplicado_guia.py", guia])
+                                response = requests.get("http://192.168.51.210:1023/DashboardController/insertaIndicadorMesCompleto")
                                 if response.status_code == 200:
                                     print("\nPetición GET exitosa: ", response.status_code)
+                                    send_msg("tablas realizadas")
                                     print("Analizis Finalizado Esperando Siguiente Horario de ejecucion.....")
                                 else:
                                     print("\nError en la petición GET: ", response.status_code)
+                                    send_msg(f"\nError en la petición GET: {response.status_code}")
                             except Exception as e:
                                 print("\nError al hacer la petición GET: ", str(e))
                             break
                         
         print("\nINICIANDO RESULTADO ASISTENTE\n")
         subprocess.run(["python", "asistente.py", guia])
-        # time.sleep(100000)
         
-        ruta_principal = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\pov1"
+        ruta_principal = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
         
         for archivo in os.listdir(ruta_principal):
             if archivo.endswith(".txt"):
@@ -103,7 +121,7 @@ def flujo_Principal():
                     if tipo_llamada.lower() in ['retencion', 'retención', 'cancelación']:
                         guia = "guia_set_12"
                         tipo = 'retenciones'
-                    elif tipo_llamada.lower() in ['servicios']:
+                    elif tipo_llamada.lower() in ['servicios', 'servicio']:
                         guia = "guia_set_1"
                         tipo = 'servicios'
                     elif tipo_llamada.lower() in ['soporte telefonia']:
@@ -142,28 +160,34 @@ def flujo_Principal():
         print("\nINCINADO SUBIDA A LA BASE\n")
         subprocess.run(["python", "Subida_Base.py", guia])
         
-        # print("\nINCINADO SUBIDA DATOS FALTANTES\n")
-        # subprocess.run(["python", "insercion_datos_faltantes.py", guia])
-        
         print("\nINCINADO UPDATE De los registro Procesados\n")
         subprocess.run(["python", "completado.py"])
         
         print("\nLimpiando las carpetas para la siguiente carga\n")
         subprocess.run(["python", "eliminar_datos.py"])
         
-        print("\nFINALIZA ANALISIS MASIVO\n")
+        # print("\nFINALIZA ANALISIS MASIVO\n")
         # break
-
-def main():
-    print("esperando Horario de Ejecucion analizis mariana....")
-    schedule.every().day.at("06:00").do(flujo_Principal)
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
     
+def iniciar_proceso():
+    """Consulta la base cada 30 minutos y ejecuta el flujo si encuentra registros transcritos."""
+    while True:
+        print("\nConsultando la base de datos de Mariana...")
+        registros_pendientes = consultar_Transcritos()
+        
+        if registros_pendientes > 30:
+            print(f"\nSe encontraron {registros_pendientes} registros con estado 'Transcrito'. Iniciando flujo principal...\n")
+            flujo_Principal()
+        else:
+            print("\nNo se encontraron registros transcritos. Esperando 30 minutos antes de la siguiente consulta...\n")
+        
+        hora_actual = datetime.datetime.now()
+        print(f"Siguiente consulta en 30 min, hora actual: {hora_actual.strftime('%Y-%m-%d %H:%M:%S')}")
+        time.sleep(1800)
+
+
 
 if __name__ == "__main__":
-    # main()
-    flujo_Principal()
+    iniciar_proceso()
     
 

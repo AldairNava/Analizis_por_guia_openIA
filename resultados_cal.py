@@ -9,7 +9,7 @@ import sys
 def obtener_valores(guia):
     config = {
         'user': 'root',
-        'password': '',
+        'password': 'thor',
         'host': '192.168.51.210',
         'database': 'audios_dana',
     }
@@ -46,7 +46,7 @@ def obtener_valores(guia):
 def obtener_fila_por_nombre(guia, archivo):
     config = {
         'user': 'root',
-        'password': '',
+        'password': 'thor',
         'host': '192.168.51.210',
         'database': 'audios_dana',
     }
@@ -57,7 +57,7 @@ def obtener_fila_por_nombre(guia, archivo):
 
     tabla = f'calificaciones_{guia}'
     nombre_columna = 'filename'
-    carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
+    carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
     ruta_archivo = os.path.join(carpeta_transcripciones, archivo)
     filename = os.path.splitext(archivo)[0] + ".mp3"
@@ -167,7 +167,7 @@ def imprimir_resultados_emparejados_soporte(resultados_emparejados):
 def actualizar_resultado(resultado, valor_columna, guia):
     config = {
         'user': 'root',
-        'password': '',
+        'password': 'thor',
         'host': '192.168.51.210',
         'database': 'audios_dana',
     }
@@ -191,7 +191,7 @@ def actualizar_resultado(resultado, valor_columna, guia):
 
 def main(guia):
     resultados_valores = obtener_valores(guia)
-    carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
+    carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
     archivo_Calificaciones = [f for f in os.listdir(carpeta_transcripciones) if f.endswith('.txt')]
 
     suma_total_calificaciones = 0.0

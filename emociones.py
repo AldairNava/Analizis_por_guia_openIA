@@ -13,9 +13,9 @@ def emociones_dato():
             text = file.read()
         return text
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
+    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
-    results_folder = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\emociones'
+    results_folder = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\emociones'
     os.makedirs(results_folder, exist_ok=True)
 
     text_paths = glob.glob(folder_path + '/*.txt')

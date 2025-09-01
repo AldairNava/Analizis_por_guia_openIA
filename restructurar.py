@@ -1,7 +1,7 @@
 import os
 import json
 
-folder_path = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\pov1"
+folder_path = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
 
 files = [f for f in os.listdir(folder_path) if f.endswith('.txt')]
 

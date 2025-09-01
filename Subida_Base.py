@@ -8,13 +8,13 @@ import os
 #cliente insatisfecho
 
 def cliente_insatisfecho_cargar():
-    carpeta_calificaciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\insatisfaccion'
+    carpeta_calificaciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\insatisfaccion'
     archivos_calificaciones = [f for f in os.listdir(carpeta_calificaciones) if f.endswith('.txt')]
 
     conexion = mysql.connector.connect(
         host="192.168.51.210",
         user="root",
-        password="",
+        password="thor",
         database="audios_dana"
     )
 
@@ -49,17 +49,116 @@ def cliente_insatisfecho_cargar():
     cursor.close()
     conexion.close()
 
+#cargar motivo llamada
+
+import os
+import mysql.connector
+
+def cargar_motivo_problematica_sentimientos_solucion(guia, tipo):
+    ruta_solucion = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\solucion"
+    ruta_motivo = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\motivo_llamada"
+    ruta_sentimientos = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\sentimientos"
+    ruta_problematica = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\problematica"
+    ruta_datos_actualizacion = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\datos_actualizcion"
+    ruta_titularidad = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\titularidad"
+
+    archivos_motivo = [f for f in os.listdir(ruta_motivo) if f.endswith('.txt')]
+
+    conexion = mysql.connector.connect(
+        host="192.168.51.210",
+        user="root",
+        password="thor",
+        database="audios_dana"
+    )
+
+    cursor = conexion.cursor()
+
+    for archivo in archivos_motivo:
+        filename = os.path.splitext(archivo)[0] + ".mp3"
+
+        rutas_archivos = {
+            "Motivo_llamada": os.path.join(ruta_motivo, archivo),
+            "Solucion": os.path.join(ruta_solucion, archivo),
+            "Emociones_cliente": os.path.join(ruta_sentimientos, archivo),
+            "Problematica": os.path.join(ruta_problematica, archivo),
+            "Datos_actualizacion": os.path.join(ruta_datos_actualizacion, archivo),
+            "Titular": os.path.join(ruta_titularidad, archivo)
+        }
+
+        contenido_archivos = {}
+
+        for campo, ruta in rutas_archivos.items():
+            if os.path.exists(ruta):
+                with open(ruta, 'r', encoding='utf-8') as file:
+                    contenido_archivos[campo] = file.read()
+            else:
+                print(f"Advertencia: El archivo {ruta} no existe. El campo {campo} no será actualizado.")
+                contenido_archivos[campo] = None
+
+        consulta_existencia = "SELECT COUNT(*) FROM audios WHERE audio_name = %s"
+        cursor.execute(consulta_existencia, (filename,))
+        resultado_base = cursor.fetchone()
+
+        if resultado_base[0] > 0:
+            consulta = """
+            UPDATE audios SET 
+                Motivo_llamada = %s, 
+                Solucion = %s, 
+                Emociones_cliente = %s, 
+                Problematica = %s,
+                Datos_actualizacion = %s,
+                Titular = %s,
+                owner = 'izzi',
+                tipo = %s
+            WHERE audio_name = %s"""
+            valores = (
+                contenido_archivos.get("Motivo_llamada"),
+                contenido_archivos.get("Solucion"),
+                contenido_archivos.get("Emociones_cliente"),
+                contenido_archivos.get("Problematica"),
+                contenido_archivos.get("Datos_actualizacion"),
+                contenido_archivos.get("Titular"),
+                tipo,
+                filename
+            )
+            cursor.execute(consulta, valores)
+            print("Los detalles del archivo {} han sido actualizados en la base de datos.".format(filename))
+            
+            # Actualizar la tabla de calificaciones dinámica
+            consulta_calificaciones = f"""
+            UPDATE calificaciones_{guia} SET 
+                problematica = %s, 
+                solucion = %s,
+                owner = 'izzi',
+                tipo = %s
+            WHERE filename = %s"""
+            valores_calificaciones = (
+                contenido_archivos.get("Problematica"),
+                contenido_archivos.get("Solucion"),
+                tipo,
+                filename
+            )
+            cursor.execute(consulta_calificaciones, valores_calificaciones)
+            print("Los detalles del archivo {} han sido actualizados en la tabla calificaciones_{}.".format(filename, guia))
+        else:
+            print("El archivo {} no existe en la base de datos. No se puede actualizar.".format(filename))
+
+    conexion.commit()
+    cursor.close()
+    conexion.close()
+
+
 
 #cliente reincidencia
 
 def reincidencia_cargar():
-    carpeta_calificaciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\reincidencia'
+    carpeta_calificaciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\reincidencia'
     archivos_calificaciones = [f for f in os.listdir(carpeta_calificaciones) if f.endswith('.txt')]
 
     conexion = mysql.connector.connect(
         host="192.168.51.210",
         user="root",
-        password="",
+        password="thor",
         database="audios_dana"
     )
 
@@ -95,7 +194,7 @@ def reincidencia_cargar():
     conexion.close()
 
 
-def carga_de_base(guia):
+def carga_de_base(guia,tipo):
     
     # ****************************** TABLA PRUEBA_DANA_CALIDAD
     import os
@@ -105,7 +204,7 @@ def carga_de_base(guia):
         conexion = mysql.connector.connect(
             host = "192.168.51.210",
             user = "root",
-            password = "",
+            password = "thor",
             database = "audios_dana"
         )
 
@@ -136,7 +235,7 @@ def carga_de_base(guia):
 
     if __name__ == "__main__":
     
-        carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
+        carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
         archivos_emociones = [f for f in os.listdir(carpeta_transcripciones) if f.endswith('.txt')]
 
@@ -162,7 +261,7 @@ def carga_de_base(guia):
         conexion = mysql.connector.connect(
             host = "192.168.51.210",
             user = "root",
-            password = "",
+            password = "thor",
             database = "audios_dana"
         )
 
@@ -190,7 +289,7 @@ def carga_de_base(guia):
 
     if __name__ == "__main__":
 
-        carpeta_emociones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\emociones'
+        carpeta_emociones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\emociones'
 
         archivos_emociones = [f for f in os.listdir(carpeta_emociones) if f.endswith('.txt')]
 
@@ -212,7 +311,7 @@ def carga_de_base(guia):
         conexion = mysql.connector.connect(
             host = "192.168.51.210",
             user = "root",
-            password = "",
+            password = "thor",
             database = "audios_dana"
         )
 
@@ -242,7 +341,7 @@ def carga_de_base(guia):
 
     if __name__ == "__main__":
         
-        carpeta_chat = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\chat'
+        carpeta_chat = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat'
 
         archivos_chat = [f for f in os.listdir(carpeta_chat) if f.endswith('.txt')]
 
@@ -264,7 +363,7 @@ def carga_de_base(guia):
         conexion = mysql.connector.connect(
             host = "192.168.51.210",
             user = "root",
-            password = "",
+            password = "thor",
             database = "audios_dana"
         )
 
@@ -295,7 +394,7 @@ def carga_de_base(guia):
 
     if __name__ == "__main__":
     
-        carpeta_tra = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
+        carpeta_tra = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
         archivos_tra = [f for f in os.listdir(carpeta_tra) if f.endswith('.txt')]
 
@@ -315,13 +414,13 @@ def carga_de_base(guia):
         conexion = mysql.connector.connect(
             host="192.168.51.210",
             user="root",
-            password="",
+            password="thor",
             database="audios_dana"
         )
 
         cursor = conexion.cursor()
 
-        carpeta_local = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\emociones"
+        carpeta_local = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\emociones"
 
         try:
             
@@ -371,7 +470,7 @@ def carga_de_base(guia):
         conexion = mysql.connector.connect(
             host = "192.168.51.210",
             user = "root",
-            password = "",
+            password = "thor",
             database = "audios_dana"
         )
 
@@ -402,7 +501,7 @@ def carga_de_base(guia):
 
     if __name__ == "__main__":
     
-        carpeta_jus = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\justificacion_emociones'
+        carpeta_jus = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones'
 
         archivos_jus = [f for f in os.listdir(carpeta_jus) if f.endswith('.txt')]
 
@@ -429,13 +528,13 @@ def carga_de_base(guia):
         conexion = mysql.connector.connect(
             host="192.168.51.210",
             user="root",
-            password="",
+            password="thor",
             database="audios_dana"
         )
 
         cursor = conexion.cursor()
 
-        ruta_resumen = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\contextos_calidad'
+        ruta_resumen = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad'
 
         archivos_resumen = os.listdir(ruta_resumen)
 
@@ -481,7 +580,7 @@ def carga_de_base(guia):
         conexion = mysql.connector.connect(
             host = "192.168.51.210",
             user = "root",
-            password = "",
+            password = "thor",
             database = "audios_dana"
         )
 
@@ -512,7 +611,7 @@ def carga_de_base(guia):
 
     if __name__ == "__main__":
     
-        carpeta_resumen = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\resumen'
+        carpeta_resumen = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\resumen'
 
         archivos_resumen = [f for f in os.listdir(carpeta_resumen) if f.endswith('.txt')]
 
@@ -540,7 +639,7 @@ def carga_de_base(guia):
         conexion = mysql.connector.connect(
             host="192.168.51.210",
             user="root",
-            password="",
+            password="thor",
             database="audios_dana"
         )
 
@@ -564,7 +663,7 @@ def carga_de_base(guia):
 
     if __name__ == "__main__":
 
-        carpeta_pov = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\pov1'
+        carpeta_pov = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1'
         archivos_pov = [f for f in os.listdir(carpeta_pov) if f.endswith('.txt')]
 
         for archivo in archivos_pov:
@@ -595,7 +694,7 @@ def carga_de_base(guia):
     #     conexion = mysql.connector.connect(
     #         host = "192.168.51.210",
     #         user = "root",
-    #         password = "",
+    #         password = "thor",
     #         database = "audios_dana"
     #     )
 
@@ -626,7 +725,7 @@ def carga_de_base(guia):
 
     # if __name__ == "__main__":
     
-    #     carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\speech_analytics'
+    #     carpeta_transcripciones = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\speech_analytics'
 
     #     archivos_emociones = [f for f in os.listdir(carpeta_transcripciones) if f.endswith('.txt')]
 
@@ -645,6 +744,7 @@ def carga_de_base(guia):
     #reincidencia e insatisfaccion
     cliente_insatisfecho_cargar()
     reincidencia_cargar()
+    cargar_motivo_problematica_sentimientos_solucion(guia,tipo)
 
 
             
@@ -653,14 +753,24 @@ def carga_de_base(guia):
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         guia = sys.argv[1]
-        carga_de_base(guia)
-        
+        if guia == 'guia_set_1':
+            tipo='servicios'
+        elif guia == 'guia_set_9':
+            tipo='soporte'
+        elif guia == 'guia_set_10':
+            tipo='soporte'
+        elif guia == 'guia_set_11':
+            tipo='soporte'
+        elif guia == 'guia_set_12':
+            tipo='retenciones'
+
+        carga_de_base(guia,tipo)
     else:
         print("Por favor, proporciona el nombre del archivo como argumento de línea de comandos.")
     
     print("═"*30, " CARGA DE BASE DE DATOS MASIVA FINALIZADA CON EXITO ", "═"*30)
     
-    # MANUAL
-    # guia = 'guia_set_1'
-    # carga_de_base(guia)
-    
+    # # MANUAL
+    # guia = 'guia_set_9'
+    # tipo='soporte'
+    # carga_de_base(guia,tipo)

@@ -6,14 +6,14 @@ def transcripciones():
     db_config = {
         'host': '192.168.51.210',
         'user': 'root',
-        'password': '',
+        'password': 'thor',
         'database': 'audios_dana'
     }
 
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
+    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
     query = """
     SELECT id_audio, filename 
@@ -58,14 +58,14 @@ def chat():
     db_config = {
         'host': '192.168.51.210',
         'user': 'root',
-        'password': '',
+        'password': 'thor',
         'database': 'audios_dana'
     }
 
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\chat'
+    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat'
 
     query = """
     SELECT id_audio, filename 
@@ -111,14 +111,14 @@ def transcripcion_original():
     db_config = {
         'host': '192.168.51.210',
         'user': 'root',
-        'password': '',
+        'password': 'thor',
         'database': 'audios_dana'
     }
 
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
+    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
     query = """
     SELECT id_audio, filename 
@@ -164,14 +164,14 @@ def justificacion_emociones():
     db_config = {
         'host': '192.168.51.210',
         'user': 'root',
-        'password': '',
+        'password': 'thor',
         'database': 'audios_dana'
     }
 
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\justificacion_emociones'
+    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones'
 
     query = """
     SELECT id_audio, filename 
@@ -217,14 +217,14 @@ def resumen():
     db_config = {
         'host': '192.168.51.210',
         'user': 'root',
-        'password': '',
+        'password': 'thor',
         'database': 'audios_dana'
     }
 
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\justificacion_emociones'
+    folder_path = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\justificacion_emociones'
 
     query = """
     SELECT id_audio, filename 

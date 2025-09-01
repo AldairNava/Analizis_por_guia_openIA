@@ -5,9 +5,9 @@ import multiprocessing
 assemblyai_api_key = os.getenv('ASSEMBLYAI_API_KEY')
 aai.settings.api_key = assemblyai_api_key
 
-CARPETA_AUDIOS = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\audios"
-CARPETA_SALIDA_CHAT = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\chat"
-CARPETA_SALIDA_TRANSCRIPCION = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones"
+CARPETA_AUDIOS = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\audios"
+CARPETA_SALIDA_CHAT = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat"
+CARPETA_SALIDA_TRANSCRIPCION = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones"
 
 def transcribir_audio(archivo_audio):
     transcriptor = aai.Transcriber()

@@ -39,14 +39,14 @@ def copiar_archivos_desde_ftp(archivos, carpeta_ftp, carpeta_local):
             archivos_no_encontrados.append(archivo)
 
     ftp.quit()
-    if carpeta_local == r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\chat':
+    if carpeta_local == r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat':
         if archivos_no_encontrados:
             cantidad_no_encontrados = len(archivos_no_encontrados)
             # send_msg(f"Servicios, {cantidad_no_encontrados} audios no encontrados en el FTP.")
             print(f"Se han registrado {cantidad_no_encontrados} audios no encontrados.")
 
             fecha_hoy = datetime.now().strftime("%Y%m%d")
-            ruta_no_encontrados = os.path.join(r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\registro no encontrados', f'audios_no_descargados_{fecha_hoy}.txt')
+            ruta_no_encontrados = os.path.join(r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\registro no encontrados', f'audios_no_descargados_{fecha_hoy}.txt')
 
             with open(ruta_no_encontrados, 'a') as f:
                 for archivo in archivos_no_encontrados:
@@ -62,7 +62,7 @@ def actualizar_estado_audio(nombre_audio, estado):
         conexion = mysql.connector.connect(
             host="192.168.51.210",
             user="root",
-            password="",
+            password="thor",
             database="audios_dana"
         )
         cursor = conexion.cursor()
@@ -82,11 +82,11 @@ def actualizar_estado_audio(nombre_audio, estado):
 conexion = mysql.connector.connect(
     host="192.168.51.210",
     user="root",
-    password="",
+    password="thor",
     database="audios_dana"
 )
 cursor = conexion.cursor()
-consulta = ("SELECT audio_name FROM audios WHERE owner = 'izzi' AND tipo = 'servicios' and status in ('Transcrito','Reprocesar') ORDER BY id DESC LIMIT 1")
+consulta = ("SELECT audio_name FROM audios WHERE tipo = 'servicios' and status in ('Transcrito','Reprocesar') ORDER BY id ASC LIMIT 1")
 
 try:
     cursor.execute(consulta)
@@ -102,7 +102,7 @@ try:
 
     nombres_audios_txt = [nombre_audio[0].replace('.mp3', '.txt') for nombre_audio in nombres_audios]
 
-    carpeta_local_transcripciones = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones"
+    carpeta_local_transcripciones = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones"
     limpiar_carpeta_local(carpeta_local_transcripciones)
 
     carpeta_ftp_transcripciones = "Transcripciones/Transcripciones/"
@@ -110,7 +110,7 @@ try:
 
     print(f"Se Guardaron los {num_transcripciones} transcripciones del ftp")
 
-    carpeta_local_chat = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\chat"
+    carpeta_local_chat = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\chat"
     limpiar_carpeta_local(carpeta_local_chat)
 
     carpeta_ftp_chat = "Transcripciones/Chat/"

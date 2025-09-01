@@ -117,13 +117,13 @@ def main(guia, tipo):
     db_connection = mysql.connector.connect(
         host="192.168.51.210",
         user="root",
-        password="",
+        password="thor",
         database="audios_dana"
     )
 
     cursor = db_connection.cursor()
 
-    folder_path = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\contextos_calidad"
+    folder_path = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad"
 
     data_to_insert = []
 

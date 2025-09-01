@@ -59,7 +59,7 @@ def hacer_pregunta_assiis_servicios(pregunta, nombre_archivo):
         conexion = mysql.connector.connect(
             host="192.168.51.210",
             user="root",
-            password="",
+            password="thor",
             database="audios_dana"
         )
         cursor = conexion.cursor()
@@ -123,7 +123,7 @@ def hacer_pregunta_assiis_soporte(pregunta, nombre_archivo):
         conexion = mysql.connector.connect(
             host="192.168.51.210",
             user="root",
-            password="",
+            password="thor",
             database="audios_dana"
         )
         cursor = conexion.cursor()
@@ -185,7 +185,7 @@ def hacer_pregunta_assiis_retenciones(pregunta, nombre_archivo):
             conexion = mysql.connector.connect(
                 host="192.168.51.210",
                 user="root",
-                password="",
+                password="thor",
                 database="audios_dana"
             )
             cursor = conexion.cursor()
@@ -236,7 +236,7 @@ def guia_set(guia, carpeta_archivos, carpeta_data):
     conexion = mysql.connector.connect(
         host="192.168.51.210",
         user="root",
-        password="",
+        password="thor",
         database="audios_dana"
     )
 
@@ -264,17 +264,50 @@ def guia_set(guia, carpeta_archivos, carpeta_data):
                     texto_completo = archivo_lectura.read()
                     
                 pregunta2 = f''' Analiza el siguiente texto: {texto_completo} dame lo siguiente:
-                                    - Reclasificacion: : clasiifca el tipo de llamada, solo clasifica entre estos tipos de llamada (retencion, servicios, soporte video, soporte telefonia, soporte internet).
-                                    - Resumen: Resumen breve de la transcripcion, problematica:, eficiencia del agente: % ,el tipo de llamada:, frases mas repetidas:.
+                                    - Reclasificacion: : clasiifca el tipo de llamada, solo clasifica entre estos 3 tipos de llamada (Servicios,Soporte,Retencion):
+                                                        Servicios cualquiera de los siguientes puntos expresados por el cliente:
+                                                        -Aclaraciones
+                                                        -Cargos no Reconocidos
+                                                        -Reembolsos
+                                                        -Pagos (incluye expresiones como “ya pagué”)
+                                                        -Consulta de saldo
+                                                        -Ajustes
+                                                        -Facturación
+                                                        -Cambios
+                                                        -Quejas
+                                                        Nota: Agrupa términos o expresiones con significados similares.
+
+                                                        Soporte Internet: Fallas relacionadas con el servicio de internet.
+                                                        Soporte Video: Fallas relacionadas con el servicio de televisión, incluyendo problemas en apps de streaming.
+                                                        Soporte Telefonía: Fallas relacionadas con el servicio telefónico.
+                                                        Importante: Excluye de esta categoría los casos en que la falla en el servicio se deba a falta de pago, suspensión por impago u otros motivos relacionados con la facturación. Si se detecta que la causa de la falla es la falta de pago, la llamada debe ser clasificada como Servicios.
+
+                                                        Retención:
+                                                        Se refiere a cualquier intento de cancelación del servicio por parte del cliente o a estrategias de retención/renovación ofrecidas por el agente.
+                                    - ResumenFront: Resumen breve de la transcripcion
+                                    - problematica: 
+                                    - eficiencia del agente: % 
+                                    - el tipo de llamada:
+                                    - frases mas repetidas:
+                                    - Confirmacion de titular: Si / No es el titular.
+                                    - Motivo de la llamada: Clasificacion corta sobre las razones expresadas por el cliente en su llamada.
+                                    - Solucion: Solucionado o No solucionado.
+                                    - Sentimientos: Frustración, Enojo, Satisfacción, Duda ocualquier otra emocion expresada.
+                                    - Tendencias: Identifica las tendencias en esta transcripcion.
+                                    - Datos de Actualizacion: Verifica que el agente ofrecio actualizacion de datos CURP y whatsApp. Dime que datos se actualizaron , de lo contario (No se ofrecio actualizacion de datos)
+                                    - Resultado de la llamada: Clasificacion corta sobre el resultado de la llamada.
                                     - Reincidencia: Valor 1 si es problema reportado varias veces por el cliente , si no 0.
                                     - Insatisfacción: 1 si el cliente termina insastifecho , si no 0.
                                     - Explicación emocional: explicacion emocional breve y detallada.
-                                    - Llamada cortada: explica el por que de la llamada cortada 
-                                    Evita colocar "-", ".-", "*", "#" o viñetas similares en la lista, SOLO SEPARALOS POR SALTOS DE LINEA
+                                    - Llamada cortada: explica el por que de la llamada cortada
+                                    IMPORTANTE: Evita colocar "-", ".-", "*", "#" o viñetas similares en la lista, SOLO SEPARALOS POR SALTOS DE LINEA Y MAYUSCULAS COLOCANDO LAS RESPUESTAS SOBRE LA MISMA LINEA
                                     '''
-
-                respuesta2 = hacer_pregunta_min_tokens(pregunta2)
-                print (respuesta2)
+                try:
+                    print("haciendo pregunta 1")
+                    respuesta2 = hacer_pregunta_min_tokens(pregunta2)
+                    print (respuesta2)
+                except Exception as e :
+                    print(f"Error{e}")
 
                 clasificacion = re.search(r'(?i)Reclasificaci[oó]n[:\s]*\n?(.+)', respuesta2)
 
@@ -282,13 +315,13 @@ def guia_set(guia, carpeta_archivos, carpeta_data):
                     tipo_llamada = clasificacion.group(1).strip()
                     if tipo_llamada.lower() in ['retencion', 'retención', 'cancelación']:
                         guia = "guia_set_12"
-                    elif tipo_llamada.lower() in ['servicios']:
+                    elif tipo_llamada.lower() in ['servicios','soporte servicios','servicio']:
                         guia = "guia_set_1"
-                    elif tipo_llamada.lower() in ['soporte telefonia']:
+                    elif tipo_llamada.lower() in ['soporte telefonia','telefonia','Telefonía','soporte telefonía']:
                         guia = "guia_set_10"
-                    elif tipo_llamada.lower() in ['soporte internet']:
+                    elif tipo_llamada.lower() in ['soporte internet','Internet','internet']:
                         guia = "guia_set_9"
-                    elif tipo_llamada.lower() in ['soporte video']:
+                    elif tipo_llamada.lower() in ['soporte video','Video','video']:
                         guia = "guia_set_11"
                     else:
                         print (f"la guia no se pudo asignar")
@@ -304,7 +337,6 @@ def guia_set(guia, carpeta_archivos, carpeta_data):
                 #PROCESO DE FORMULACION DE PREGUNTAS
                    
                 if guia == 'guia_set_1':
-                    # PREGUNTA A ASISTENTE PARA SERVICIOS Y RETENCIONES
                     pregunta_servicios = f"""
                                     califica la transcripción proporcionada con el siguiente formato, ten en cuenta que es un ejemplo, debe de calificar con los parámetros del archivo adjunto:
 
@@ -341,7 +373,7 @@ def guia_set(guia, carpeta_archivos, carpeta_data):
 
                                     **INSTRUCCIÓN IMPORTANTE solo afecta a estos parametros:
                                     Script_entrada: Siempre pon 1.
-                                    Validacion de datos: Si se encuentra una coincidencia de busqueda por cuenta , telefono o nombre del titular ponle 1 si no 0.
+                                    Validacion de datos: Si se encuentra una coincidencia de busqueda por nombre del titular o confirmacion de Titular ponle 1 si no 0.
                                     Preguntas_sin_responder: Siempre pon 1.
                                                             
                                     **INSTRUCCIÓN IMPORTANTE: - RESPETA LOS VALORES QUE VAN EN CADA COLUMNA, EN CALIFICACION SOLO VAN 1 O 0, EN justificacion_PROMPT Utiliza LA LISTA "LISTA DE PENALIZACIONES" del archivo de entrenamiento adjunto. CUANDO EL VALOR DE CALIFICACION ES 0 Y EN descripcion_penalizacion SOLO VA LA JUSTIFICACION DE LA PENALIZACION HECHA POR LA IA.
@@ -457,7 +489,7 @@ def guia_set(guia, carpeta_archivos, carpeta_data):
                                     
                                     **INSTRUCCIÓN IMPORTANTE solo afecta a estos parametros:
                                     Script_entrada: Siempre pon 1.
-                                    Validacion de datos: Si se encuentra una coincidencia de busqueda por cuenta , telefono o nombre del titular ponle 1 si no 0.
+                                    Validacion de datos: Si se encuentra una coincidencia de busqueda por nombre del titular o confirmacion de Titular ponle 1 si no 0.
                                     Preguntas_sin_responder: Siempre pon 1.
                                         """
                 # Proceso de consulta a asistentes
@@ -534,12 +566,12 @@ def extraccion(guia):
     print("\nINICIANDO EXTRACCION DE CALIFICACIONES\n")
     start_time = time.time()
 
-    carpeta_data = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion'
+    carpeta_data = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion'
 
     conexion = mysql.connector.connect(
         host="192.168.51.210",
         user="root",
-        password="",
+        password="thor",
         database="audios_dana"
     )
 
@@ -604,9 +636,9 @@ def extraccion_1():
     
     print("\nINICIANDO EXTRACCION DE PRIMER JSON\n")
 
-    carpeta_entrada = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\pov1'
+    carpeta_entrada = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1'
 
-    carpeta_salida = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
+    carpeta_salida = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
 
     for nombre_archivo in os.listdir(carpeta_entrada):
 
@@ -645,8 +677,8 @@ def extraccion_2():
     
     print("\nINICIANDO EXTRACCION DE SEGUNDO JSON\n")
 
-    carpeta_entrada = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\pov3'
-    carpeta_salida = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\json_calificacion_2'
+    carpeta_entrada = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov3'
+    carpeta_salida = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_2'
 
     for nombre_archivo in os.listdir(carpeta_entrada):
 
@@ -683,7 +715,7 @@ def extraccion_2():
 #*********************** ELIMINA COMILLAS DOBLES
                 
 def eliminar_comillas_numeros_en_carpeta():
-    ruta_carpeta = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
+    ruta_carpeta = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
     for nombre_archivo in os.listdir(ruta_carpeta):
         ruta_json = os.path.join(ruta_carpeta, nombre_archivo)
 
@@ -706,9 +738,9 @@ def eliminar_comillas_numeros_en_carpeta():
 def comparacion():
     print("\nINICIANDO COMPARACION DE JSON pov4\n")
 
-    folder_path_json1 = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
-    folder_path_json2 = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\json_calificacion_2'
-    output_folder = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\pov4'
+    folder_path_json1 = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_1'
+    folder_path_json2 = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\json_calificacion_2'
+    output_folder = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov4'
 
     for filename in os.listdir(folder_path_json1):
         file_path_json1 = os.path.join(folder_path_json1, filename)
@@ -757,9 +789,9 @@ def comparacion():
 #*********************** ELIMINA FORMATO JSON Y DEJA SOLO TABLA DE CALIFICACIONES
 
 def eliminar_json():
-    archivo_a_analizar = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\pov1"
+    archivo_a_analizar = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov1"
 
-    carpeta_salida = r"C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\contextos_calidad"
+    carpeta_salida = r"C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\contextos_calidad"
     
     for nombre_archivo in os.listdir(archivo_a_analizar):
         ruta_entrada = os.path.join(archivo_a_analizar, nombre_archivo)
@@ -796,13 +828,6 @@ def eliminar_json():
             
 #*********************** CARGA DE CALIFICACIONES A LA BASE DE DATOS
 
-# def archivo_ya_subido(cursor, guia, file_name):
-#     # Verifica si el archivo ya existe en la base de datos
-#     consulta_existencia = f"SELECT COUNT(*) FROM calificaciones_{guia} WHERE filename = '{file_name}'"
-#     cursor.execute(consulta_existencia)
-#     resultado = cursor.fetchone()[0]
-#     return resultado > 0
-
 
 def archivo_ya_subido(cursor, guia, filename):
     cursor.execute(f"SELECT 1 FROM calificaciones_{guia} WHERE filename = %s", (filename,))
@@ -814,13 +839,13 @@ def cargar_calificaciones_en_mysql(guia):
     conn = mysql.connector.connect(
         host='192.168.51.210',
         user='root',
-        password='',
+        password='thor',
         database='audios_dana'
     )
 
     cursor = conn.cursor()
 
-    json_folder = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion\pov4'
+    json_folder = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion\pov4'
 
     for filename in os.listdir(json_folder):
         file_path = os.path.join(json_folder, filename)
@@ -840,7 +865,8 @@ def cargar_calificaciones_en_mysql(guia):
 
                 cursor.execute(f"SHOW COLUMNS FROM calificaciones_{guia}")
                 column_names = [column[0] for column in cursor.fetchall()]
-                
+
+                # Excluir 'id_audio' de las columnas
                 column_names = [column for column in column_names if column != 'id_audio']
 
                 update_fields = ', '.join([f"{column} = %s" for column in column_names])
@@ -856,6 +882,7 @@ def cargar_calificaciones_en_mysql(guia):
                 conn.commit()
 
                 print(f"\nValores de {filename} actualizados en la base de datos calificaciones_{guia}.\n")
+
             else:
                 cursor.execute(f"SHOW COLUMNS FROM calificaciones_{guia}")
                 column_names = [column[0] for column in cursor.fetchall()]
@@ -873,7 +900,6 @@ def cargar_calificaciones_en_mysql(guia):
 
                 print(f"\nValores de {filename} insertados en la base de datos calificaciones_{guia}.\n")
 
-            # Actualización de la tabla audios
             tipo = None
             if guia == "guia_set_1":
                 tipo = "servicios"
@@ -907,16 +933,9 @@ def main():
     start_time = time.time()
     if len(sys.argv) > 1:
         guia = sys.argv[1]
-        carpeta_archivos = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
-        carpeta_data = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion'
+        carpeta_archivos = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
+        carpeta_data = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\calificacion'
         guia_set(guia, carpeta_archivos, carpeta_data)
-        # extraccion(guia)
-        # extraccion_1()
-        # extraccion_2()
-        # eliminar_comillas_numeros_en_carpeta()
-        # comparacion()
-        # eliminar_json()
-        # cargar_calificaciones_en_mysql(guia)
     else:
         print("Por favor, proporciona el nombre del archivo como argumento de línea de comandos.")
     
@@ -929,8 +948,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-# guia="guia_set_1"
-# carpeta_archivos = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
-# carpeta_data = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\calificacion'
-# guia_set(guia, carpeta_archivos, carpeta_data)
     

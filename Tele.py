@@ -10,8 +10,8 @@ def send_msg(msg):
     IST = pytz.timezone('America/Mexico_City')
     raw_TS = datetime.now(IST)
     curr_time = raw_TS.strftime("%H-%M-%S")
-    msg = f"Analizis Whisper: {msg}"
-    telegram_api = f"https://api.telegram.org/bot6819354375:AAFb2UuBWfbOkT83YDyt2IH_lHSUgOpnkuU/sendMessage?chat_id=-4539225320&text={msg}"
+    msg = f"Analizis Mariana: {msg}"
+    telegram_api = f"https://api.telegram.org/bot8426416631:AAEDYPkcuN3sRoyOAbFIYFeWhxt6gINTvrE/sendMessage?chat_id=-1002792004307&text={msg}"
     
     for attempt in range(5):  # Reintentar hasta 5 veces
         try:

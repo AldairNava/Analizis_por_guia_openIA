@@ -5,7 +5,7 @@ from ftplib import FTP
 db_config = {
     'host': '192.168.51.210',
     'user': 'root',
-    'password': '',
+    'password': 'thor',
     'database': 'audios_dana'
 }
 

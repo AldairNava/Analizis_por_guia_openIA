@@ -19,7 +19,7 @@ def procesar_archivo(ruta_archivo):
     with open(ruta_archivo, 'w', encoding='utf-8') as archivo:
         archivo.write(contenido_procesado)
 
-carpeta = r'C:\Users\Jotzi1\Desktop\copias\Analisis_por_guia\Proceso_Clidad_1\transcripciones'
+carpeta = r'C:\Users\Jotzi1\Desktop\copias\Analisis_Masivo_guia\Proceso_Clidad_1\transcripciones'
 
 for nombre_archivo in os.listdir(carpeta):
     
